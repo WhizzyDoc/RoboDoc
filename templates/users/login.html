@@ -1,0 +1,125 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<html>
+
+<head>
+  <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico.png' %}"/>
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DPSR - Sign in</title>
+  <link rel="stylesheet" href="{% static 'css/stylelogin.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <style>
+    body{
+        background-image: url('/static/images/service-bg.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .main {
+      background-color: #FFFFFF;
+            width: 100%;
+            max-width: 700px;
+            margin: 4em auto;
+            border-radius: 1.5em;
+            height: 450px;
+        margin: 10em auto;
+        border-radius: 1.5em;
+        box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+    }
+    .asteriskField{
+        color: red;
+    }
+    form.form1 {
+                padding: 0px 30px;
+                width: 100%;
+            }
+
+            .form1 p {
+                color: rgb(38, 50, 56);
+                font-weight: 600;
+                font-size: 14px;
+                font-family: 'Ubuntu', sans-serif;
+                margin: 5px 0px;
+                margin-bottom: 12px;
+                }
+    label{
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 18px;
+        margin-bottom: 0.5rem;
+    }
+    input{
+        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
+        width: 30%;
+        height: 32px;
+    }
+    .btn {
+        cursor: pointer;
+        border-radius: 0.6em;
+        color: #fff;
+        background: linear-gradient(to right, #1d86df 0%, #39b49a 100%);
+        border: 0px;
+        text-decoration: none;
+        outline: none;
+        font-family: 'Ubuntu', sans-serif;
+        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+        padding: 10px 40px;
+        font-size: 16px;
+        margin-bottom: 10px;
+        margin-top: 14px;
+    }
+    .btn:hover{
+        font-size: 17px;
+    }
+    .btn:focus {
+        background: linear-gradient(to right, #39b49a 0%, #1d86df 100%);
+    }
+</style>
+</head>
+<body>
+    
+    {% if messages %}
+    <ul class="messages" style="list-style-type:none;">
+        {% for message in messages %}
+            <li class="alert alert-dismissible alert-{{ message.tags }}"><i class="fa fa-{{ message.tags }}"></i>
+                {{ message|safe }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+  <div class="main">
+    <p class="sign" align="center">Sign In</p>
+    <form class="form1" method="POST" action="{% url 'user_login' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" required name="username" id="username">
+      </div>
+      <div class="input-group mb-3">
+        <input type="password" placeholder="Password" name="password" required class="form-control" id="pwd">
+        <div class="input-group-append see-pass">
+          <span class="input-group-text"><i class="fa fa-eye"></i></span>
+        </div>
+      </div>
+        <button class= "btn btn-outline-info" type="submit">
+          Login
+        </button>
+      <p class="forgot"><a href="{% url 'password_reset' %}">Forgot Password? </a> </p>
+      <p class="forgot"><a href="{% url 'user_register' %}">Not registered yet? Register Here! </a> </p>
+    </form>
+  </div>
+  <script>
+    $('.see-pass').click(function() {
+            var inp = $(this).siblings('input')
+            if(inp.attr('type') === 'password') {
+              inp.attr('type', 'text');
+            }
+            else {
+              inp.attr('type', 'password');
+            }
+          })
+  </script>
+</body>
+</html>

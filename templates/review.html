@@ -1,0 +1,41 @@
+{% extends 'basic.html' %}
+{% block title %}Review Page{% endblock %}
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-8 col-lg-5">
+      <h6 class="text-muted">Review</h6>
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+         {{con.0.review}}
+          <div class="image-parent">
+              <img src="{{user.profile.image.url}}" class="img-fluid">
+          </div>
+        </li>
+          {% for i in con %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{i.review}}
+            <!--{% for j in sub %}-->
+            <!--{% ifequal i j %}-->
+          <div class="image-parent">
+              <img src="{{user.profile.image }}" class="img-fluid">
+          </div>
+            <!--{% endifequal %}-->
+            <!--{% endfor %}-->
+        </li>
+          {% endfor %}
+
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block css %}
+body{
+  padding: 2rem 0rem;
+}
+.image-parent {
+  max-width: 40px;
+}
+{% endblock %}
+

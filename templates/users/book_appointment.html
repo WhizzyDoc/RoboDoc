@@ -1,0 +1,294 @@
+{% extends 'users/base.html' %}
+ {% load static %}
+ {% block title %}Book Appointment{% endblock %}
+ {% block active4 %}active{% endblock %}
+{% block style %}
+<style>
+ *{
+	margin: 0px;
+	padding: 0px;
+}
+.appoint-con {
+    width: 95%;
+    max-width: 1000px;
+    padding: 10px;
+    margin: 20px auto;
+    border-radius: 15px;
+}
+.s-list {
+    list-style-type: none;
+    padding-top: 10px;
+}
+.s-list li {
+    display: inline-block;
+    padding: 5px 10px;
+    padding-right: 20px;
+    background: rgb(28, 28, 119);
+    color: #fff;
+    border-radius: 8px;
+    margin: 3px;
+    font-size: 13px;
+    position: relative;
+}
+.rem-symp {
+    position: absolute;
+    z-index: 5;
+    right: -4px;
+    top: -8px;
+    padding: 8px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    color: yellow;
+}
+.docbtn{
+              background: linear-gradient(to right,#2895f1,#0060b1);
+              width: 100%;
+              color: white;
+              font-weight: 600;
+              border-radius: 0.6em;
+              display: block;
+              margin: auto;
+              border: none;
+              padding: 10px 20px;
+              font-size: 15px;
+              margin-bottom: 10px;
+              text-decoration: none !important;
+              outline: none;
+              transition: all .3s ease;
+            }
+          .docbtn:hover{
+                transform: scale(0.9);
+                color: #fff;
+          }
+          .symp-dd {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 500px;
+  z-index: 8;
+}
+.symp-dd-content {
+  position: absolute;
+  display: none;
+  background: #fff;
+  width: 100%;
+  max-height: 500px;
+  overflow-y: auto;
+  box-shadow: 0 18px 36px rgba(0,0,0,0.3), 0 14px 11px rgba(0,0,0,0.22);
+}
+
+.symp-dd-content > a {
+  display: block;
+  padding: 15px;
+  text-decoration: none;
+  color: black;
+  text-align: left;
+}
+.symp-dd-content > a:hover {
+  color: white;
+  background: #903c56;
+}
+</style>
+{% endblock %}
+{% block content %}
+{% if messages %}
+    <ul class="messages" style="list-style-type:none;">
+        {% for message in messages %}
+            <li class="alert alert-dismissible alert-{{ message.tags }}"><i class="fa fa-{{ message.tags }}"></i>
+                {{ message|safe }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<div class="text-center">
+    <h1 class="title text-center" style="font-size: 30px !important">Book An Appointment</h1>
+</div>
+<div class="w-card appoint-con">
+    <form class="appointment-form row" method="POST">
+        {% csrf_token %}
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 w-padding">
+            <h3 class="w-bold-xx w-text-blue">Patient's Info</h3>
+            <div class="form-group">
+                <label for="pname">Full Name:</label>
+                <input type="text" class="form-control" id="pname" value="{{profile.first_name}} {{profile.last_name}}" readonly>
+            </div>
+            <div class="row">
+                <div class="form-group col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+                    <label for="page">Age:</label>
+                    <input type="number" class="form-control" id="page" value="{{profile.age}}" readonly>
+                </div>
+                <div class="form-group col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7">
+                    <label for="pgender">Sex:</label>
+                    <input type="text" class="form-control" id="pgender" value="{{profile.gender}}" readonly>
+                </div>
+            </div>
+            <h3 class="w-bold-xx w-text-blue">Doctor's Info</h3>
+            <div class="form-group">
+                <label for="">Doctor's Name:</label>
+                <input type="text" class="form-control" readonly id="dname" value="{{doctor.name}} {{doctor.first_name}} {{doctor.last_name}}" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="dspec">Speciality:</label>
+                <input type="text" class="form-control" id="pdiag" readonly value="{{doctor.speciality.name}}" placeholder="">
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 w-padding">
+            <h3 class="w-bold-xx w-text-blue">Presentation</h3>
+
+            <div class=" symp-dd">
+                <div class="form-group symp-dd-btn">
+                    <label for="psymp">Symptoms:</label>
+                    <input type="text" onkeyup="search_symptoms()" class="form-control" id="psymp" value="" placeholder="Search to add symptoms">
+                </div>
+                <div class="symp-dd-content">
+                    {% for i in ss %}
+                    <a href="#" class="symp-dd-item" onclick="Functionsymptoms(this.textContent)">{{i.name}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+
+                <ul class="s-list">
+                    {% if diagnosis %}
+                    {% for s in diagnosis.get_symptom_list %}
+                        <li clas="symp-list">
+                            <span class="rem-symp" onclick="removeSymptom($(this))">&times;</span>
+                            <span class="symp-item">{{s}}</span>
+                        </li>
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+            
+            <div class="form-group">
+                <label for="pconf">Additional Information:</label>
+                <textarea class="form-control" value="" id="pinfo" style="resize:none" rows="5" placeholder="Extra complaint or info here"></textarea>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 w-padding">
+            <h3 class="w-bold-xx w-text-blue">Appointment</h3>
+            <div class="form-group">
+                <label for="">Date:</label>
+                <input type="date" class="form-control" id="adate" required>
+            </div>
+            <div class="form-group">
+                <label for="">Time:</label>
+                <input type="time" class="form-control" id="atime" required>
+            </div>
+            <button class="docbtn" type="submit"><i class="fa fa-calendar"></i> Book Appointment</button>
+        </div>
+        <script>
+            function search_symptoms() {
+    let input = document.getElementById('psymp').value
+    if(input.trim() !== "") {
+      document.querySelector('.symp-dd-content').style.display = "block"
+    }
+    else {
+      document.querySelector('.symp-dd-content').style.display = "none"
+    }
+    input=input.toLowerCase();
+    let x = document.querySelectorAll('.symp-dd-item');
+ 
+    for (i = 0; i < x.length; i++) {
+        if (!x[i].innerHTML.toLowerCase().includes(input)) {
+            x[i].style.display="none";
+        }
+        else {
+            x[i].style.display="block";
+        }
+    }
+}
+
+            function removeSymptom(elem) {
+                //alert('hi')
+                elem.parent().remove()
+            }
+        
+            function Functionsymptoms(name) {
+                let temp = `<li clas="symp-list">
+                            <span class="rem-symp" onclick="removeSymptom($(this))">&times;</span>
+                            <span class="symp-item">${name}</span>
+                        </li>`;
+                $('.s-list').append(temp)
+                $('.symp-dd-content').hide()
+                $('#psymp').val('')
+            }
+        </script>
+    </form>
+</div>
+<script>
+    $(".appointment-form").on('submit', function(e) {
+  e.preventDefault();
+  var symptoms = document.getElementsByClassName("symp-item");
+  var noofsym = symptoms.length;
+  var symlist=[];
+  if(noofsym == 0){
+     swal("Oops", "please add some symptoms", "warning");
+  }
+  else {
+  for(i=0;i<symptoms.length;i++){
+    symlist[i]=symptoms[i].innerText;
+    console.log(symlist[i])
+  }
+  //console.log(symlist);
+  $(".docbtn").html(`Processing...`).attr('disabled', 'true');
+  var sym = "";
+  for(i = 0 ; i < symlist.length; i++){
+    if(i == 0){
+      sym = `?symptoms=${encodeURI(symlist[i])}`;
+    }else{
+      sym += `&symptoms=${encodeURI(symlist[i])}`;
+    }
+  }
+  //console.log(sym)
+  fetch(`/diagnosis${sym}`)
+  .then(res => res.json())
+  .then(data => {
+    //console.log(data);
+    if(data['status'] == 'success') {
+        bookAppointment()
+    }
+    else if(data['status'] == 'error') {
+        swal('Error', data['message'], 'error')
+    }
+  })
+  .catch(err => {
+    console.log(err)
+    swal('Error', 'Error occured', 'error')
+  })
+  }
+ 
+  });
+
+  function bookAppointment() {
+    let url = '{% url "book_appointment" doctor.id %}';
+    const formData = new FormData()
+    formData.append('date', $('#adate').val())
+    formData.append('time', $('#atime').val())
+    formData.append('complaint', $('#pinfo').val())
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json'
+        },
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+        if(data['status'] == 'success') {
+            location.href = '{% url "user_appointments" %}'
+        }
+        else {
+            swal("Error", data['message'], 'error')
+        }
+        $(".docbtn").html(`<i class="fa fa-calendar"></i> Book Appointment`).attr('disabled', 'false');
+    })
+    .catch(err => {
+        console.log(err)
+        swal("Error", 'Error occured', 'error')
+    })
+  }
+</script>
+{% endblock %}

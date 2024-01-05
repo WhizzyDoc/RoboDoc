@@ -1,0 +1,36 @@
+{% extends 'basic.html' %}
+{% block body %}
+{% load static %}
+<section id="testimonials">
+  <div class="container testi">
+    <h1 class="title text-center">WHAT OUR USERS SAY?</h1>
+    <div class="row offset-1">
+        <section class="section">
+            <div class="container">
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <a href="{% url 'add' %}">Add new entry</a>
+                        </div>
+                    </div>
+                </article>
+            {% for i in ent %}
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>{{i.date_posted}}</strong>
+                                <br> {{i.text}}
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+            </div>
+        </section>
+
+    <footer class="footer"></footer>
+    </div>
+  </div>
+</section>
+{% endblock %}

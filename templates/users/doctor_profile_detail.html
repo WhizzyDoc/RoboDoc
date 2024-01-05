@@ -1,0 +1,132 @@
+{% extends 'users/base.html' %}
+ {% load static %}
+ {% block title %}Specialist{% endblock %}
+ {% block active3 %}active{% endblock %}
+{% block style %}
+<style>
+ *{
+	margin: 0px;
+	padding: 0px;
+}
+body {
+	color: #484848;
+}
+h2 { font-size: 36px;}
+h3 { font-size: 24px;}
+h4 a { color: #484848;}
+h4 { font-size: 18px;}
+p {
+	letter-spacing: normal;
+	line-height: 23px;
+	margin: 0 0 20px;
+}
+a {text-decoration: none;}
+a:hover, a:focus, a:active {
+	outline: none;
+	text-decoration: none !important;
+    color: #0062cc;
+}
+.tg-box {
+    width: 100%;
+    float: left;
+    padding: 30px;
+}
+.tg-box + .tg-box{border-top: 1px solid #ddd;}
+.card-view {
+    background-color: #fff;
+    border: 1px solid hsla(0,0%,43%,.25);
+    box-shadow: 2px 5px 15px hsla(0,0%,43%,.14);
+    padding: 16px !important;
+    margin-bottom: 10px;
+}
+.card{
+        background: #FFFFFF;
+        border: 1px solid hsla(0,0%,43%,.25);
+        box-sizing: border-box;
+        box-shadow: 2px 5px 15px hsla(0,0%,43%,.14);
+        border-radius: 0px 0px 10px 10px;
+    }
+.tg-icontitle {
+    width: 100%;
+    float: left;
+    margin: 0 0 30px;
+}
+.tg-icontitle h3 {
+    margin: 0;
+    color: #484848;
+    font-size: 20px;
+    line-height: 20px;
+    position: relative;
+    font-weight: 500;
+}
+.doclist li {
+	line-height: 28px;
+	list-style: disc inside none;
+}
+.doclist ul li { margin-left: 20px; }
+.tg-servicelocation .tg-directpost{
+    width: 100%;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="title text-center mb-2">Doctor's Detail</h1>
+        <div class="row">
+         <div class="col-lg-1">
+         </div>
+         <div class="col-lg-4 gauche">
+            <div class="card" style="width: 18rem;margin:10px auto">
+                <img src="/images/{{doctor.image}}" class="card-img-top" alt="doctors">
+                <div class="card-body text-center">
+                  <h4 class="word w-bold-xx">{{doctor.name}}</h4>
+                  <p class="card-text">{{doctor.description}}</p>
+                </div>
+            </div>
+         </div>
+
+         <div class="col-lg-6 corps">
+            <div class="tg-box card-view mb-3">
+                <div class="tg-icontitle">
+                    <h3> <img src = "{% static 'images/user-solid.svg' %}" width="16px;" height="16px;" style="margin-right: 10px;" />Profile</h3>
+                   </div>
+                    <div class="tg-description" style="max-height: none;">
+                       <p class="w-bold-x">{{doctor.description}}&nbsp;</p>
+                    </div>
+                     <div class="doctor-details">
+                         <ul class="doclist">
+                             <li class="doclist"><span class="w-bold-x">NMC Number</span> - {{doctor.nmc_num}}&nbsp;</li>
+                              <li class="doclist"><span class="w-bold-x">Qualification</span> - {{doctor.qualification}}&nbsp;</li>
+                               <li class="doclist"><span class="w-bold-x">Speciality</span> - {{doctor.speciality}}&nbsp;</li>
+                               <li class="doclist"><span class="w-bold-x">Fee</span> - {{doctor.fee}}</li>
+                           </ul>
+                           <a href="{% url 'book_appointment' doctor.id %}">
+                            <button class="btn btn-success"><i class="fa fa-calendar"></i> Book An Apointment</button>
+                           </a>
+                       </div>
+                   </div>
+                   <div class="tg-box available-locations card-view">
+                       <div class="tg-icontitle">
+                        <h3><img src = "{% static 'images/location-arrow-solid.svg' %}" width="16px;" height="16px;" style="margin-right: 10px;"/>Available Locations</h3>
+                       </div>
+                       <div class="tg-servicelocations">
+                           <div class="tg-servicelocation">
+                                        <div class="tg-directinfo">
+                                            <div class="tg-directposthead">
+                                            <!--   <h4><a href="/hospital/manoshastra-counseling-and-research-center">Manoshastra Counseling And Research Center</a></h4> -->
+                                                 <div class="tg-subjects">{{doctor.location}}</div>
+                                                 <p style="margin-bottom: 0px;"> {{doctor.phone}}&nbsp;</p>
+                                               </div>
+                                            <!--   <div class="tg-description" style="max-height: none;">
+                                               </div> -->
+                                           </div>
+                                       </div>
+                                   </div>
+                        </div>
+         </div>
+         <div class="col-lg-1">
+         </div>
+        </div>
+       </div>
+
+{% endblock %}

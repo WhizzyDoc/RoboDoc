@@ -1,0 +1,17 @@
+{% extends 'basic.html' %}
+{% block body %}
+{% load static %}
+<div id="user-profile">
+  <div class="container text-center">
+    <h1 class="title">MEMBERSHIP DETAILS</h1>
+      <div class="account text-center">
+        <h4>New Member?</h4>
+        <button type="button" class="btn btn-primary"><a href="/users/register"><font color="white"> Register Here</font></a></button>
+      </div>
+      <div class="account text-center">
+        <h4>Already A Member?</h4>
+        <button type="button" class="btn btn-primary"><a href="/users/login"><font color="white">Login Here</font></a></button></div>
+      </div>
+  </div>
+</section>
+{% endblock %}

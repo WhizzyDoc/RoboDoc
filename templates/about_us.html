@@ -1,0 +1,25 @@
+{% extends 'basic.html' %}
+{% block body %}
+{% load static %}
+<section id="about-us">
+    <div class="container">
+      <h1 class="title text-center">WHY VISIT US?</h1>
+      <div class="row">
+        <div class="col-md-6 about-us">
+          <p class="about-title">Why we're different?</p>
+          <ul>
+            <li>An easy and friendly web interface</li>
+            <li>Approach to general diseases</li>
+            <li>Know what you are suffering from</li>
+            <li>Details about nearby specialist</li>
+            <li>Accurate results on your hands.</li>
+            <li>We protect your data</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+           <img src = "{% static 'images/about-us.jpg' %}" class="about-us-img"/>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

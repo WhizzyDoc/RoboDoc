@@ -1,0 +1,264 @@
+{% extends 'users/base.html' %}
+ {% load static %}
+ {% block title %}Disease Archive{% endblock %}
+ {% block active15 %}active{% endblock %}
+ {% block active10 %}active{% endblock %}
+{% block style %}
+<style>
+    #predict{
+    position: static;
+    width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+#predicted-data{
+  margin: auto;
+  margin-top: 5% !important;
+  width: 100%;
+  max-width: 500px;
+  background:#fff;
+  padding: 10px;
+  font-size: 16px;
+  text-align: left;
+  box-shadow: 3px 1px 3px 0px rgba(0,0,0,0.3);
+  display:inline-block;
+}
+#inputsym{
+   position: fixed;
+   right: 100px;
+}
+
+
+#symptoms-box{
+position: static;
+margin: auto;
+margin-top: 5%;
+width: 100%;
+max-width: 1000px;
+text-align: center;
+background-color: #e9ecef !important;
+min-height: 300px;
+padding: 10px 10px 10px 10px;
+}
+.card-body{
+  margin: auto ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.symp-dd {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 500px;
+  z-index: 8;
+}
+.symp-dd-content {
+  position: absolute;
+  display: none;
+  background: #fff;
+  width: 100%;
+  max-height: 500px;
+  overflow-y: auto;
+  box-shadow: 0 18px 36px rgba(0,0,0,0.3), 0 14px 11px rgba(0,0,0,0.22);
+}
+
+.symp-dd-content > a {
+  display: block;
+  padding: 15px;
+  text-decoration: none;
+  color: black;
+  text-align: left;
+}
+.symp-dd-content > a:hover {
+  color: white;
+  background: #903c56;
+}
+
+.wrapper {
+    width: 100%;
+}
+.wrapper .tabs{
+  position: relative;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+.wrapper .tabs label{
+  display: block;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  color: #17a2b8;
+  font-size: 17px;
+  border-radius: 5px;
+  margin: 0 5px;
+  transition: all 0.3s ease;
+}
+.wrapper .tabs label:hover{
+  background: rgba(23,162,184,0.3);
+}
+#home:checked ~ .tabs label.home,
+#blog:checked ~ .tabs label.blog{
+  color: #fff;
+}
+.tabs label i{
+  padding-right: 7px;
+}
+.tabs .slider{
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+  border-radius: 5px;
+  background: #17a2b8;
+  transition: all 0.3s ease;
+}
+input[type="radio"]{
+  display: none;
+}
+#blog:checked ~ .tabs .slider{
+  left: 50%;
+}
+section .content{
+  display: none;
+  background: none;
+  padding: 20px 5px 20px 5px;
+  
+}
+#home:checked ~ section .content-1,
+#blog:checked ~ section .content-2,
+#code:checked ~ section .content-3,
+#help:checked ~ section .content-4,
+#about:checked ~ section .content-5{
+  display: block;
+}
+section .content .title{
+  font-size: 21px;
+  font-weight: 500;
+  margin: 30px 0 10px 0;
+}
+section .content p{
+text-align: justify;
+}
+</style>
+ {% endblock %}
+
+ {% block content %}
+  
+ <div class="container">
+    <br>
+    <div class="text-center"> 
+      <h5 class="w-text-red w-bold-x">
+          Search medical conditions and get comprehensive details on them including characteristics, causes, pathophysiology, presentaion, signs and symptoms, 
+          classification, diagnosis, treatment, prevention, management, prognosis, epidemiology, history and relevant references.
+      </h5><br>
+
+      <div class=" symp-dd">
+
+        <div class="input-group symp-dd-btn mb-3">
+          <input type="text" onkeyup="search_diseases()" placeholder="Search Medical Conditions" class="form-control" id="symp-input">
+          <div class="input-group-append">
+            <span class="input-group-text"><i class="fa fa-search"></i></span>
+          </div>
+        </div>
+
+        <div class="symp-dd-content">
+          {% for d in dx %}
+          <a href="#" data-id="{{d.id}}" class="symp-dd-item">{{d.name}}</a>
+          {% endfor %}
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+    <div class="w-card w-padding-bottom container">
+        <div class="text-center"> 
+            <h2 class="w-bold-xx dx-title title" style="padding-top:10px !important;"></h2><br>
+        </div>
+
+        <div class="wrapper">
+            <input type="radio" name="slider" checked id="home">
+            <input type="radio" name="slider" id="blog">
+            <div class="tabs">
+              <label for="home" class="home"><i class="fa fa-heart"></i>Details</label>
+              <label for="blog" class="blog"><i class="fa fa-book"></i>References</label>
+              <div class="slider"></div>
+            </div>
+            <section>
+              <div class="dx-details content content-1"></div>
+              <div class="content content-2"></div>
+            </section>
+          </div>
+    </div>
+
+  <script>
+    $('.symp-dd-item').click(function(e) {
+        e.preventDefault();
+        let id = $(this).data('id')
+        let title = $(this).text()
+        $('#symp-input').val(title)
+        $('.dx-title').html(title)
+        $('.symp-dd-content').css({'display': 'none'})
+        $('.dx-details').empty().html(`<div class="loader"></div>`)
+
+        fetch(`/api/v1/diseases/get_disease_detail/?id=${id}`)
+        .then(res => {return res.json()})
+        .then(data => {
+            //console.log(data)
+            $('.dx-details').empty()
+            if(data['status'] == 'success') {
+                if(data.data.meaning.trim() !== "") {
+                    $('.dx-details').html(data.data.meaning)
+                }
+                else {
+                    var temp = `<p clas="w-text-gray">There are no details for ${data.data.name} yet.</p>`;
+                    $('.dx-details').html(temp)
+                }
+            }
+            else {
+                swal("Error", data['message'], 'error')
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            swal("Error", "Error occured", 'error')
+        })
+    })
+
+    function search_diseases() {
+    let input = document.getElementById('symp-input').value
+    if(input.trim() !== "") {
+      document.querySelector('.symp-dd-content').style.display = "block"
+    }
+    else {
+      document.querySelector('.symp-dd-content').style.display = "none"
+    }
+    input=input.toLowerCase();
+    let x = document.querySelectorAll('.symp-dd-item');
+ 
+    for (i = 0; i < x.length; i++) {
+        if (!x[i].innerHTML.toLowerCase().includes(input)) {
+            x[i].style.display="none";
+        }
+        else {
+            x[i].style.display="block";
+        }
+    }
+}
+
+ 
+  </script>
+ 
+ 
+{% endblock %}

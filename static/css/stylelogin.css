@@ -1,0 +1,40 @@
+body {
+    background-image: linear-gradient(to right,#2895f1,#0060b1);
+    font-family: 'Ubuntu', sans-serif;
+}
+
+
+.sign {
+    font-size: 32px;
+    padding-top: 35px;
+    color: rgb(98, 59, 240);
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+}
+
+form.form1 {
+    padding: 0px 50px;
+    width: 800px;
+    height: 300px;
+}
+
+.form1 p {
+    color: rgb(38, 50, 56);
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'Ubuntu', sans-serif;
+    margin: 5px 0px;
+    margin-bottom: 12px;
+    }
+
+a {
+     color: rgb(98, 59, 240);
+    text-decoration: none;
+    outline: none;
+}
+
+@media (max-width: 600px) {
+    .main {
+        border-radius: 0px;
+    }
+}

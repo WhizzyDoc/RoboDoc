@@ -1,0 +1,120 @@
+{% extends 'users/base.html' %}
+ {% load static %}
+ {% block title %}Specialists{% endblock %}
+ {% block active3 %}active{% endblock %}
+{% block style %}
+<style>
+      .col-md-3
+          {
+          display: inline-block;
+          margin-left:-4px;
+          }
+            .card-body {
+                padding: 1.25rem;
+                height: 100%;
+                width: 100%;
+            }
+
+          .card img {
+            width: 60%;
+            height: auto;
+            border-radius: 50%;
+            display: block;
+            margin: auto;
+          }
+          .docbtn{
+              background: linear-gradient(to right,#2895f1,#0060b1);
+              width: 100%;
+              color: white;
+              font-weight: 600;
+              border-radius: 0.6em;
+              display: block;
+              margin: auto;
+              border: none;
+              padding: 10px 20px;
+              font-size: 15px;
+              margin-bottom: 10px;
+              text-decoration: none !important;
+              outline: none;
+              transition: all .3s ease;
+            }
+          .docbtn:hover{
+                transform: scale(0.9);
+                color: #fff;
+          }
+           body .no-padding{
+               padding-left: 0;
+               padding-right: 0;
+           }
+           @media screen and (max-width:500px) {
+            .spec-search {flex-wrap:wrap}
+           }
+</style>
+{% endblock %}
+{% block content %}
+<form method="get" action="{% url 'search_specialist' %}" class="spec-search w-margin-top w-flex w-flex-center w-align-center">
+  <div class="input-group w-margin">
+    <input type="text" name="query" required class="form-control" placeholder="Search Specialist">
+    <div class="input-group-append">
+      <span class="input-group-text"><i class="fa fa-search"></i></span>
+    </div>
+  </div>
+  <select style="max-width:200px !important" class="w-margin spec-cat custom-select">
+    <option value="all" {%if not category%}selected{%endif%}>All Specialists</option>
+    {% for c in cats %}
+    {% if category %}
+    <option value="{{c.slug}}"{%if c == category%}selected{%endif%}>{{c.name}}</option>
+    {% else %}
+    <option value="{{c.slug}}">{{c.name}}</option>
+    {% endif %}
+    {% endfor %}
+  </select>
+</form>
+<script>
+  $('.spec-cat').on('change', function() {
+    let value = $(this).val()
+    if(value === 'all') {location.href = '/user/specialists/'}
+    else {location.href = `/user/specialists/category/${value}/`}
+    
+  })
+</script>
+{% if messages %}
+    <ul class="messages" style="list-style-type:none;">
+        {% for message in messages %}
+            <li class="alert alert-dismissible alert-{{ message.tags }}"><i class="fa fa-{{ message.tags }}"></i>
+                {{ message|safe }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+<section id="doctors">
+  <div class="text-center">
+    <h1 class="title text-center">{%if category%}{{category.name}}{%else%}All Specialists{%endif%}</h1>
+
+      <!--<a href="/specialist/search">Search</a>-->
+
+
+      
+
+        <!--Slideshow starts here -->
+    <div class="row" style="margin:auto !important">
+          <!--iko range 1 dekhi jati valuesamma cha tyasamma jancha-->
+        {% for i in speciality %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3" style="padding:10px !important">
+          <div class="card" style="width: 100%;">
+            <img src="/images/{{i.image}}"  class="card-img-top" alt="..." style="border-radius:50%;padding:20px">
+            <div class="card-body d-flex flex-column">
+              <h5 class="w-bold-x w-card-title">{{i.name}} {{i.first_name}} {{i.last_name}}</h5>
+              <p class="card-text">{{i.description}}</p>
+              <a href="{% url 'specialist_detail' i.id %}" class="docbtn mt-auto">View Profile</a>
+              <a href="{% url 'book_appointment' i.id %}" class="docbtn mt-auto">Book Appointment</a>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+    </div>
+
+  </div>
+
+ </section>
+{% endblock %}

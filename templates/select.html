@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select</title>
+</head>
+<body>
+<div class="container">
+    {% if disease|length < 1 %}
+            <p>No Search Results</p>
+            Your search <b>{{query}}</b> didn't match any documents<br>
+            Suggestions:
+          <li>Try different keywords.</li>
+          <li>Try fewer keywords.</li>
+    {% endif %}
+
+    {% for i in disease %}
+        <input type="checkbox" id="diseases" name="diseases" value="{{i.sym_name}}">
+        <label for="diseases"> {{i.sym_name}}</label><br>
+    {% endfor %}
+    <h2>Search Results</h2>
+</div>
+</body>
+</html>

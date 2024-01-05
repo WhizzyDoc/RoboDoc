@@ -1,0 +1,171 @@
+{% extends 'users/base.html' %}
+ {% load static %}
+ {% block title %}Home{% endblock %}
+ {% block active1 %}active{% endblock %}
+ {% block active11 %}active{% endblock %}
+ {% block style %}
+ <style>
+    .about-us ul li {
+        font-size:18px !important;
+    }
+ </style>
+ {% endblock %}
+        {% block content %}
+        <!------------------Banner section-------->
+        <section id="banner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-7">
+                        <div class="promo"><p> Disease Predictor </p>
+                        <p>And</p>
+                        <p >Specialist Recommender</p>
+                        </div>
+                        <p class="lead w-small">
+                            The Disease Prediction system is an end user 
+                            support and online consultation project. Here, we propose a web application that allow users 
+                            to get instant guidance on their disease through an intelligent system. The application is 
+                              fed with various details and the disease associated with those details.The application allows
+                               user to share their disease related issues.It then processes user specific details to check 
+                               for various illness that could be associated with it.Here we use some intelligent data mining
+                                techniques to guess the most accurate illness that could be associated with patient’s details.
+                                Based on result, patient can contact doctor accordingly for further treatment.
+                        </p>                
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-5 text-center">
+                         <img src = "{% static 'images/phone.png' %}" />
+                    </div>
+                </div>
+            </div>
+            <img src = "{% static 'images/wave.png' %}" class="bottom-img"/>
+        </section>
+        <section id="about-us">
+            <div class="container">
+            <h1 class="title text-center">WHY VISIT US?</h1>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 about-us">
+                    <p class="about-title">Why we're different?</p>
+                    <ul>
+                        <li>An easy and friendly web interface</li>
+                        <li>Approach to general diseases</li>
+                        <li>Know what you are suffering from</li>
+                        <li>Details about nearby specialist</li>
+                        <li>Accurate results on your hands.</li>
+                        <li>We secure and encrypt your data</li>
+                    </ul>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6">
+                    <img src = "{% static 'images/about-us.jpg' %}" class="about-us-img" style="width:100% !important; height: auto;" />
+                </div>
+            </div>
+            </div>
+        </section>
+<!-----------------Services section------------>
+        <section id="services" class="services wow fadeIn">
+          <div class="container text-center">
+            <h1 class="title">WHAT WE DO?</h1>
+             <div class="row text-center">
+                <div class="col-12 col-sm-12 col-md-6 services">
+                          <img src = "{% static 'images/service-icon2.png' %}" class="service-img" />
+                            <h4>Disease Prediction</h4>
+                            <p>Using AI, we provide disease prediction services on the basis of your chosen symptoms.</p>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 services">
+                   <img src = "{% static 'images/service-icon3.png' %}" class="service-img" />
+
+                    <h4>Detailed Specialist</h4>
+                    <p>On the basis of disease predicted,we provide you a detailed list of Specialist and help you book appoinments with them.</p>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 services">
+                    <img src = "{% static 'images/service-icon2.png' %}" class="service-img" />
+                      <h4>Disease Archives</h4>
+                      <p>Search for medical conditions and get comprehensive and up-to-date information about them.</p>
+          </div>
+          <div class="col-12 col-sm-12 col-md-6 services">
+             <img src = "{% static 'images/service-icon3.png' %}" class="service-img" />
+
+              <h4>Appointments</h4>
+              <p>We provide and avenue to book appointment with registered specialists and a means of communication via our chat messages and video call features.</p>
+          </div>
+              </div>
+            </div>
+          </section>
+ <!----------------- Doctor section --------------------->
+        <section id="doctors">
+            <div class="container text-center">
+                <h1 class="title text-center">The Specialists</h1>
+                <div class="row text-center">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-4 doctors">
+                        <img src = "{% static 'images/doctor_01.jpg' height=100px %}" class="doctors-img" />
+                        <h4>Dr. Sandeep Shakya</h4>
+                        <p>ENT Specialist</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-4 doctors">
+                        <img src = "{% static 'images/doctor_02.jpg' %}" class="doctors-img">
+                        <h4>Dr. Kanchan Singh</h4>
+                        <p>Gynaecologist</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 doctors">
+                        <img src = "{% static 'images/doctor_03.jpg' %}" class="doctors-img" />
+                        <h4>Dr. Lily Baniya</h4>
+                        <p>Cardiologist</p>
+                    </div>
+                </div>
+                <a href="{% url 'specialists' %}">   <button type="button" class="btn btn-primary">All available doctors </button></a>
+            </div>
+        </section>
+<!-----------------Testimonials section--------->
+        <section id="testimonials" >
+            <div class="container testi">
+                <h1 class="title text-center">TESTIMONIALS</h1>
+                <div class="row offset-1">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 testimonials">
+                        <p>Thanks for your easy and friendly webpage. It led us to predict my symptoms at an early stage.</p>
+                        <img src = "{% static 'images/testi_01.png' %}" />
+                        <p class="user-details"><b>Bishal Adhikari</b><br>Manager of Racer</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 testimonials">
+                        <p>Thankyou for the detailed appointment information of doctors, it helped me reach on time.</p>
+                        <img src = "{% static 'images/testi_02.png' %}" />
+                        <p class="user-details"><b>Susan Shrestha</b><br>Worker at XYZ ltd.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+<!-------------------Account section----------------->
+        <section id="user-profile" class="">
+            {% if user.is_authenticated %}
+            <br>
+            {% else %}
+            <h1 class="title w-center">SIGN IN AS</h1>
+                <div class="row">
+
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <a href="#">
+                            <img style="display:block;margin:auto;"  alt="doctor" src="{% static 'images/doctor.png' %}"  class="img">
+                        </a>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <a href="{% url 'user_login' %}">
+                            <img style="display:block;margin:auto;"  alt="patient" src="{% static 'images/patient.png' %}"  class="img">
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+ <!--------------------Contact section--------------->
+        <section id="social-media" class="py-5">
+            <div class="container text-center">
+                <p>FIND US ON SOCIAL MEDIA</p>
+                <div class="social-icons">
+                  <a href="https://www.facebook.com/"><img src = "{% static 'images/fb-logo(1).png' %}" /></a>
+                  <a href="https://www.instagram.com/"><img src = "{% static 'images/fb-logo(2).png' %}" /></a>
+                  <a href="https://www.twitter.com/"><img src = "{% static 'images/fb-logo(4).png' %}" /></a>
+                </div>
+            </div>
+        </section>
+
+        {% include 'users/footer.html' %}
+
+    {% endblock %}
+    

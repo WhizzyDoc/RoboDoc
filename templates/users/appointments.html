@@ -1,0 +1,24 @@
+{% extends 'users/base.html' %}
+ {% load static %}
+ {% block title %}Appointments{% endblock %}
+ {% block active4 %}active{% endblock %}
+{% block style %}
+<style>
+ *{
+	margin: 0px;
+	padding: 0px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+    <ul class="messages" style="list-style-type:none;">
+        {% for message in messages %}
+            <li class="alert alert-dismissible alert-{{ message.tags }}"><i class="fa fa-{{ message.tags }}"></i>
+                {{ message|safe }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

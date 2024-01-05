@@ -1,0 +1,25 @@
+{% extends 'basic.html' %}
+{% block body %}
+{% load static %}
+<section id="services" class="services wow fadeIn">
+    <div class="container text-center">
+        <h1 class="title">WHAT WE DO?</h1>
+        <form method="get" action="/specialist/select" class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" name="q" id="q" placeholder="Select For Disease" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <div class="row text-center">
+            <div class="col-md-6 services">
+                <img src = "{% static 'images/service-icon2.png' %}" class="service-img" />
+                <h4>Disease Prediction Facilities</h4>
+                <p>We provide disease prediction services on the basis of your chosen symptoms.</p>
+            </div>
+            <div class="col-md-6 services">
+                <img src = "{% static 'images/service-icon3.png' %}" class="service-img" />
+                <h4>Detailed Specialist</h4>
+                <p>On the basis of disease predicted,we provide you a detailed list of Specialist.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

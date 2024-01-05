@@ -1,0 +1,96 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block body %}
+<style>
+        h1{
+              color: #3A3A3A;
+        }
+        #contact{
+              background: linear-gradient(to right,#2895f1,#0060b1);
+              color: white;
+              font-weight: 600;
+              border-radius: 0.6em;
+              border: none;
+              padding: 10px 40px;
+              font-size: 24px;
+              margin-bottom: 20px;
+              margin-left: 8px;
+              text-decoration: none;
+              outline: none;
+        }
+        #contact:hover{
+              font-size: 25px;
+        }
+        .form-group input, textarea, #messages{
+              background: #F9F9F9;
+              border: 1px solid #135081;
+              box-sizing: border-box;
+              border-radius: 10px;
+        }
+        .form-group{
+              display: flex;
+              justify-content: space-between;
+              flex-direction: column;
+        }
+
+        .form-container label{
+              display: block;
+              font-family: Century Gothic;
+              font-style: normal;
+              font-weight: bold;
+              font-size: 18px;
+              line-height: 22px;
+              color: #3A3A3A;
+        }
+        textarea.form-control{
+               border: 1px solid #135081;
+        }
+</style>
+<section  id="feedback" class="py-2">
+    <div class="container">
+        <h1 class="title text-center">Feedback</h1>
+        <div class="row">
+            <div class="container mt-5 mb-5">
+                <div class="row form-container">
+                    <div class="col-md-6">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group pl-2 pb-3">
+                                <label for="name">Name</label>
+                                <input id="name" type="text" name="name" class="form-control p-0 pl-2" aria-describedby="nameHelp" placeholder="Your Name" required="required"/>
+                            </div>
+                            <div class="form-group pl-2 pb-3">
+                                <label for="email">Email</label>
+                                <input id="email" type="email" name="email" class="form-control p-0 pl-2" aria-describedby="emailHelp" placeholder="Email"  required="required"/>
+                            </div>
+                            <div class="form-group pl-2 pb-3">
+                                <label for="message">Message</label>
+                                <textarea id="message" class="form-control messagebox p-0 pl-3 pt-2" name="message" rows="8" placeholder="Message" style="resize: none !important;"  required="required"></textarea>
+                            </div>
+                            <button id="contact" type="submit" class="text-center btn btn-primary btn-contact " name="submit"> Submit</button>
+                        </form>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="col-md-6">
+                        <img class="img img-fluid" src="{% static 'images/Rectangle 38.png' %}" alt="" width="537px" height="359px"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="mastfoot mt-auto text-center">
+  <div class="inner">
+    <p>© Disease Predictor and Specialist Recommender.</p>
+  </div>
+</footer>
+{% endblock %}
+
+              
+
+        
+      
+
+
